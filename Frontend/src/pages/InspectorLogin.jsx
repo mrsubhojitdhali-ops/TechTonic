@@ -39,7 +39,7 @@ export default function InspectorLogin(){
             onClick={()=>setShowPassword(!showPassword)}
             style={{position:'absolute', right:'10px', top:'50%', transform:'translateY(-50%)', cursor:'pointer', userSelect:'none', fontSize:'18px'}}
           >
-            {showPassword ? '🙈' : '👁️'}
+            {showPassword ? '😶' : '👁️'}
           </span>
         </div>
 
