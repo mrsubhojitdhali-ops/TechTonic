@@ -7,7 +7,11 @@ const seedInspector = require('./seed'); // 1. eta add koro
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const cors = require('cors');
+app.use(cors({
+  origin: ["http://localhost:5173", "https://tomar-project.vercel.app"],
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
