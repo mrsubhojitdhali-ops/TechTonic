@@ -9,7 +9,7 @@ const seedInspector = async () => {
   await User.create({
     name: 'Inspector WB',
     email: 'inspector@wb.gov.in',
-    password: 'inspector123',
+    password: 'inspector@123',
     role: 'inspector'
   });
   console.log("✅ Inspector seeded");
