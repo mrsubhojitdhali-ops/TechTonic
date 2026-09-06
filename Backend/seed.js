@@ -1,25 +1,13 @@
-const User = require('./models/user'); // <- choto hater, etai fix
-
-const seedInspector = async () => {
-  try {
-    let user = await User.findOne({ email: 'inspector@wb.gov.in' });
-    if (user) {
-      user.password = 'Inspector@123';
-      user.role = 'inspector';
-      await user.save();
-      console.log("✅ Inspector updated with Inspector@123");
-    } else {
-      await User.create({
-        name: 'Inspector WB',
-        email: 'inspector@wb.gov.in',
-        password: 'Inspector@123',
-        role: 'inspector'
-      });
-      console.log("✅ Inspector seeded with Inspector@123");
-    }
-  } catch (err) {
-    console.log("Seed error:", err.message);
-  }
-};
-
-module.exports = seedInspector;
+require('dotenv').config();
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const User = require('./models/User');
+async function seed(){
+  await mongoose.connect(process.env.MONGO_URI);
+  await User.deleteOne({email:'inspector@wb.gov.in'});
+  const hash = await bcrypt.hash('Inspector@123',10);
+  await User.create({name:'Inspector WB', email:'inspector@wb.gov.in', password:hash, role:'inspector'});
+  console.log('✅ INSPECTOR CREATED');
+  process.exit();
+}
+seed();
