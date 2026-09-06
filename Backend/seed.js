@@ -1,18 +1,25 @@
-const User = require('./models/user');
+const User = require('./models/User');
+const bcrypt = require('bcryptjs');
 
 const seedInspector = async () => {
-  const exists = await User.findOne({ email: 'inspector@wb.gov.in' });
-  if (exists) {
-    console.log("✅ Inspector already exists");
-    return;
+  try {
+    const hashedPassword = await bcrypt.hash('inspector123', 10);
+    
+    const inspector = await User.findOneAndUpdate(
+      { email: 'inspector@wb.gov.in' },
+      {
+        name: 'Inspector WB',
+        email: 'inspector@wb.gov.in',
+        password: hashedPassword,
+        role: 'inspector'
+      },
+      { upsert: true, new: true }
+    );
+    
+    console.log("✅ Inspector ready:", inspector.email);
+  } catch (err) {
+    console.log("Seed error:", err.message);
   }
-  await User.create({
-    name: 'Inspector WB',
-    email: 'inspector@wb.gov.in',
-    password: 'inspector123',
-    role: 'inspector'
-  });
-  console.log("✅ Inspector seeded");
 };
 
 module.exports = seedInspector;
