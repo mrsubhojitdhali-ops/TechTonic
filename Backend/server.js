@@ -15,11 +15,11 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use('/api/auth', require('./Backend/routes/authRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
 app.get('/', (req,res) => res.send("API OK - CORS Fixed"));
 
 const PORT = process.env.PORT || 10000;
-const seedInspector = require('./Backend/seed');
+const seedInspector = require('./seed');
 
 mongoose.connect(process.env.MONGO_URI).then(async()=>{
   console.log("DB Connected");
