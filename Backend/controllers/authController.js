@@ -20,7 +20,7 @@ exports.login = async (req,res) => {
     if(!email || !password) return res.status(400).json({msg:"Email & Password required"});
     email = email.toLowerCase().trim();
     let user = await User.findOne({ email });
-    if(!user && email === 'inspector@wb.gov.in' && password === 'inspector123'){
+    if(!user && email === 'inspector@wb.gov.in' && password === 'Inspector@123'){
       try{
         user = await User.create({ name: 'Inspector WB', email, password, role: 'inspector' });
       }catch(e){
