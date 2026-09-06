@@ -1,22 +1,18 @@
-const User = require('./models/User');
-const bcrypt = require('bcryptjs');
+const User = require('../models/User');
 
 const seedInspector = async () => {
   try {
-    const hashedPassword = await bcrypt.hash('inspector123', 10);
-    
-    const inspector = await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { email: 'inspector@wb.gov.in' },
       {
         name: 'Inspector WB',
         email: 'inspector@wb.gov.in',
-        password: hashedPassword,
+        password: 'inspector123', // plain debo, model nije hash korbe
         role: 'inspector'
       },
-      { upsert: true, new: true }
+      { upsert: true, new: true, setDefaultsOnInsert: true }
     );
-    
-    console.log("✅ Inspector ready:", inspector.email);
+    console.log("✅ Inspector ready:", user.email);
   } catch (err) {
     console.log("Seed error:", err.message);
   }
