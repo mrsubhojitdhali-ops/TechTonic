@@ -1,4 +1,4 @@
-const User = require('./models/User');
+const User = require('./models/user'); // <- choto hater, etai fix
 
 const seedInspector = async () => {
   try {
