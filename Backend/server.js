@@ -21,7 +21,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.get('/', (req,res)=>res.send("CORS FIXED V3 - FINAL"));
 
 const bcrypt = require('bcryptjs');
-const User = require('./models/User');
+const User = require('./models/user');
 const seed = async()=>{
   const hash = await bcrypt.hash("Inspector@123",10);
   let u = await User.findOne({email:"inspector@wb.gov.in"});
