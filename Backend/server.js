@@ -6,16 +6,11 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
-// CORS - sobar age, ekdom first
 app.use(cors({
   origin: "https://tech-tonic-nine.vercel.app",
   credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"]
-}));
-app.options("*", cors({
-  origin: "https://tech-tonic-nine.vercel.app",
-  credentials: true
 }));
 
 app.use(express.json());
