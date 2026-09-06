@@ -1,48 +1,40 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
-
 const app = express();
 
-// 1. CORS - DEMO ER JONNO SOB ALLOW (kal judge er samne atkabe na)
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
-app.options('*', cors({
-  origin: true,
-  credentials: true
-}));
-
-// 2. Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// 3. Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/trader', require('./routes/traderRoutes'));
-app.use('/api/inspector', require('./routes/inspectorRoutes'));
-
-// 4. Test route
-app.get('/', (req, res) => {
-  res.send('TechTonic API Running - CORS OK');
+// --- CORS FIX - EKDOM PROTHOME ---
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
 });
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+// --- CORS END ---
 
-// 5. DB Connect + Seed + Start
-const PORT = process.env.PORT || 5000;
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+
+app.get('/', (req,res) => res.send("API OK - CORS Fixed"));
+
+const PORT = process.env.PORT || 10000;
 const seedInspector = require('./seed');
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(async () => {
-    console.log("MongoDB Connected");
-    await seedInspector();
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.log("DB Error:", err.message);
-  });
+mongoose.connect(process.env.MONGO_URI).then(async () => {
+  console.log("DB Connected");
+  await seedInspector();
+  app.listen(PORT, () => console.log("Server on", PORT));
+}).catch(e => console.log(e));
