@@ -9,10 +9,13 @@ const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 
 const app = express();
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ 
+  origin: ["https://tech-tonic-orcin.vercel.app", "http://localhost:5173"], 
+  credentials: true 
+}));
 app.use(express.json({ limit: '10mb' }));
 
-// --- PING ROUTE TA EKHANE THAKBE, UPOR E ---
+// --- PING ROUTE ---
 app.get('/', (_req, res) => res.json({ ok: true, service: 'TechTonic Legal Metrology API' }));
 app.get('/api/ping', (req, res) => {
   res.status(200).json({ status: 'alive' });
