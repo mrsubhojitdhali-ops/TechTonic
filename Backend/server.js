@@ -11,7 +11,13 @@ const User = require('./models/User');
 const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
+
+// --- PING ROUTE TA EKHANE THAKBE, UPOR E ---
 app.get('/', (_req, res) => res.json({ ok: true, service: 'TechTonic Legal Metrology API' }));
+app.get('/api/ping', (req, res) => {
+  res.status(200).json({ status: 'alive' });
+});
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/instruments', require('./routes/instrumentRoutes'));
 app.use((err, _req, res, _next) => { console.error(err); res.status(500).json({ msg: 'Server error' }); });
@@ -22,7 +28,6 @@ if (!MONGO_URL) { console.error('❌ MONGO_URI missing in Backend/.env'); proces
 mongoose.connect(MONGO_URL, { serverSelectionTimeoutMS: 10000 })
   .then(async () => {
     console.log('✅ MongoDB Connected');
-    // Create the demo inspector as a real MongoDB user so approvedBy is an ObjectId.
     const email = 'inspector@wb.gov.in';
     const existing = await User.findOne({ email });
     if (!existing) {
@@ -30,10 +35,6 @@ mongoose.connect(MONGO_URL, { serverSelectionTimeoutMS: 10000 })
       console.log('✅ Demo inspector created: inspector@wb.gov.in');
     }
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`✅ API running on http://localhost:${PORT}`));
+    app.listen(PORT, '0.0.0.0', () => console.log(`✅ API running on port ${PORT}`));
   })
   .catch(err => { console.error('❌ MongoDB Error:', err.message); process.exit(1); });
-app.get('/api/ping', (req, res) => {
-  res.json({ status: 'alive' });
-});
- 
