@@ -7,6 +7,7 @@ const roles = require('../middleware/roles');
 
 router.get('/verify/:certId', verifyCertificate);
 router.get('/stats/public', getPublicStats);
+router.get('/public/stats', getPublicStats); // FIXED - Home page er jonno alias
 router.get('/public/list', getPublicList);
 
 router.get('/', auth, getInstruments);
