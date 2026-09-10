@@ -33,5 +33,7 @@ mongoose.connect(MONGO_URL, { serverSelectionTimeoutMS: 10000 })
     app.listen(PORT, () => console.log(`✅ API running on http://localhost:${PORT}`));
   })
   .catch(err => { console.error('❌ MongoDB Error:', err.message); process.exit(1); });
-
+app.get('/api/ping', (req, res) => {
+  res.json({ status: 'alive' });
+});
  

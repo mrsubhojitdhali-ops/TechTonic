@@ -41,7 +41,7 @@ function Home(){
     <header style={{padding:'14px 28px',background:theme.headerBg,backdropFilter:'blur(10px)',borderBottom:`1px solid ${theme.cardBorder}`,display:'flex',justifyContent:'space-between',alignItems:'center',position:'sticky',top:0,zIndex:10}}>
       <div style={{display:'flex',alignItems:'center',gap:10}}>
         <div style={{width:38,height:38,background:isDark?'#fff':'#0f172a',color:isDark?'#0f172a':'#fff',display:'grid',placeItems:'center',borderRadius:10,fontWeight:900,fontSize:18}}>⚖️</div>
-        <div><div style={{fontWeight:900,letterSpacing:-0.3,lineHeight:1}}>Legal Metrology</div><div style={{fontSize:10,letterSpacing:2,color:theme.subText,fontWeight:700}}>GOVT. OF WEST BENGAL</div></div>
+        <div><div style={{fontWeight:900,letterSpacing:-0.3,lineHeight:1}}>NYAAY</div><div style={{fontSize:10,letterSpacing:2,color:theme.subText,fontWeight:700}}>GOVT. OF WEST BENGAL</div></div>
       </div>
       <div style={{display:'flex',gap:12,alignItems:'center'}}>
         <button onClick={()=>setDarkMode(!isDark)} style={{width:40,height:40,borderRadius:12,border:`1px solid ${theme.cardBorder}`,background:theme.card,cursor:'pointer', fontSize:16}}>{isDark?'☀️':'🌙'}</button>
