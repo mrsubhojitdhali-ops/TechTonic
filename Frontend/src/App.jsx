@@ -15,11 +15,11 @@ function Home(){
   const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
   const [filter, setFilter] = useState('all');
   const [statsData, setStatsData] = useState({ total:0, pending:0, approved:0, rejected:0 });
-  const API = 'http://localhost:5000/api/instruments';
+  const API = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/instruments`;
 
   useEffect(()=>{ localStorage.setItem('theme', darkMode? 'dark' : 'light'); }, [darkMode]);
   useEffect(()=>{
-    fetch(`${API}/stats/public`).then(r=>r.json()).then(setStatsData).catch(()=>{});
+    fetch(`${API}/public/stats`).then(r=>r.json()).then(setStatsData).catch(()=>{});
   }, []);
 
   const isDark = darkMode;
